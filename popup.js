@@ -52,7 +52,7 @@ let append_element = function(value, checked) {
 	let new_input = document.createElement("input");
 	new_input.setAttribute("type", "checkbox");
 	new_input.setAttribute("value", value);
-	new_input.setAttribute("checked", checked);
+	checked && new_input.setAttribute("checked");
 
 	let input_placeholder = document.createTextNode(value);
 	let new_line = document.createElement("br");
@@ -71,21 +71,16 @@ let get_cookies = function() {
 };
 
 let uncheck_all = function(list) {
-	let length = list.length;
-
-	for (let i = 0; i < length; i++) {
-		if (list[i].checked) {
-			list[i].checked = false;
-		}
+	for (let input in list) {
+		list[input].checked && (list[input].checked = false);
 	}
 
 	save_cookies(list);
-
 };
 
 let save_cookies = function(list, new_input){
 	document.cookie = format_cookies(list, new_input);
-	renderer(); // render after save
+	renderer();
 }
 
 let format_cookies = function(list, new_input) {
@@ -97,7 +92,9 @@ let format_cookies = function(list, new_input) {
 			"checked": list[input].checked
 		});
 	};
-	formated_list.push(new_input);
+
+	new_input && formated_list.push(new_input);
+
 	return JSON.stringify(formated_list);
 };
 
