@@ -1,13 +1,12 @@
 window.onload = function() {
+	//document.cookie =  '[]; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	renderer();
 
 	document.getElementById('add_new').addEventListener("click", function(){
 		let value_to_add = document.getElementById("text_of_new").value;
-		console.log(value_to_add);
 
 		let list = []
 		list = get_cookies();
-		console.log(list);
 		save_cookies(
 			list,
 			{
@@ -28,14 +27,12 @@ window.onload = function() {
 
 }
 
-// DONE
 let renderer = function() {
 	clear_list();
 
 	append_list(get_cookies());
 };
 
-// DONE
 let clear_list = function() {
 	let actual_list = document.getElementById("to_do_list");
 	while (actual_list.firstChild) {
@@ -43,16 +40,12 @@ let clear_list = function() {
 	}
 }
 
-// DONE
 let append_list = function(list) {
-
 	for (to_do in list) {
-		console.log(list[to_do]);
 		append_element(list[to_do]['name'], list[to_do]['checked']);
 	}
 }
 
-// DONE
 let append_element = function(value, checked) {
 	let parent = document.getElementById("to_do_list");
 
@@ -69,9 +62,7 @@ let append_element = function(value, checked) {
 	parent.appendChild(new_line);
 }
 
-// DONE
 let get_cookies = function() {
-	console.log(document.cookie);
 	let test = document.cookie;
 	if (test) {
 		return JSON.parse(test);
@@ -79,7 +70,6 @@ let get_cookies = function() {
 	return '';
 };
 
-// DONE
 let uncheck_all = function(list) {
 	let length = list.length;
 
@@ -93,27 +83,24 @@ let uncheck_all = function(list) {
 
 };
 
-// DONE
 let save_cookies = function(list, new_input){
 	document.cookie = format_cookies(list, new_input);
 	renderer(); // render after save
 }
 
-// DONE
 let format_cookies = function(list, new_input) {
 	let formated_list = [];
 
-	for (input in list) {
+	for (let input in list) {
 		formated_list.push({
-			"name": input.value,
-			"checked": input.checked
+			"name": list[input].name,
+			"checked": list[input].checked
 		});
 	};
 	formated_list.push(new_input);
 	return JSON.stringify(formated_list);
 };
 
-// DONE
 let remove_selected = function(list) {
 	let new_list = [];
 
