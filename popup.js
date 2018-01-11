@@ -21,14 +21,14 @@ window.onload = function() {
 }
 
 let add_new_input = function(value) {
-		let list = get_cookies();
-		save_cookies(
-			list,
-			{
-				"name": value,
-				"checked": false
-			}
-		);
+	let list = get_cookies();
+	save_cookies(
+		list,
+		{
+			"name": value,
+			"checked": false
+		}
+	);
 }
 
 let renderer = function() {
@@ -127,9 +127,12 @@ let format_cookies = function(list, new_input) {
 let remove_selected = function(list) {
 	let new_list = [];
 
-	for (to_do in list) {
-		if (!list[to_do]['checked']) {
-			new_list.push(list[to_do]);
+	for (let to_do of list) {
+		if (!to_do.checked) {
+			new_list.push({
+				"name": to_do.value,
+				"checked": to_do.checked
+			});
 		};
 	};
 
