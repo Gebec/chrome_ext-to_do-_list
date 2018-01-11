@@ -3,17 +3,10 @@ window.onload = function() {
 	renderer();
 
 	document.getElementById('add_new').addEventListener("click", function(){
-		let value_to_add = document.getElementById("text_of_new").value;
+		let text_box = document.getElementById("text_of_new");
+		text_box.value && add_new_input(text_box.value);
 
-		let list = []
-		list = get_cookies();
-		save_cookies(
-			list,
-			{
-				"name": value_to_add,
-				"checked": false
-			}
-		);
+		text_box.value = '';
 	});
 
 	document.getElementById('uncheck_selected').addEventListener("click", function(){
@@ -27,10 +20,23 @@ window.onload = function() {
 
 }
 
+let add_new_input = function(value) {
+		let list = get_cookies();
+		save_cookies(
+			list,
+			{
+				"name": value,
+				"checked": false
+			}
+		);
+}
+
 let renderer = function() {
 	clear_list();
 
 	append_list(get_cookies());
+
+	add_check_listener();
 };
 
 let clear_list = function() {
@@ -42,17 +48,18 @@ let clear_list = function() {
 
 let append_list = function(list) {
 	for (to_do in list) {
-		append_element(list[to_do]['name'], list[to_do]['checked']);
+		append_element(list[to_do]['name'], list[to_do]['checked'], to_do);
 	}
 }
 
-let append_element = function(value, checked) {
+let append_element = function(value, checked, id) {
 	let parent = document.getElementById("to_do_list");
 
 	let new_input = document.createElement("input");
 	new_input.setAttribute("type", "checkbox");
 	new_input.setAttribute("value", value);
-	checked && new_input.setAttribute("checked");
+	new_input.setAttribute("id", id);
+	checked && new_input.setAttribute("checked", true);
 
 	let input_placeholder = document.createTextNode(value);
 	let new_line = document.createElement("br");
@@ -62,12 +69,29 @@ let append_element = function(value, checked) {
 	parent.appendChild(new_line);
 }
 
-let get_cookies = function() {
-	let test = document.cookie;
-	if (test) {
-		return JSON.parse(test);
+let add_check_listener = function() {
+	let checkbox_list = document.querySelectorAll("input[type=checkbox]");
+
+	for (let checkbox of checkbox_list) {
+		checkbox.addEventListener('change', function() {
+			change_check_state(this.id, this.checked);
+		});
 	}
-	return '';
+}
+
+let change_check_state = function(id, state) {
+	let list = get_cookies();
+	list[id]['checked'] = state;
+
+	save_cookies(list);
+}
+
+let get_cookies = function() {
+	let cookies = document.cookie;
+	if (cookies) {
+		return JSON.parse(cookies);
+	}
+	return [];
 };
 
 let uncheck_all = function(list) {
@@ -79,7 +103,9 @@ let uncheck_all = function(list) {
 };
 
 let save_cookies = function(list, new_input){
-	document.cookie = format_cookies(list, new_input);
+	new_input && list.push(new_input);
+
+	document.cookie = format_cookies(list);
 	renderer();
 }
 
