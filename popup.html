@@ -4,23 +4,25 @@
 	<title>TO DO LIST Manager</title>
 	<script src="popup.js"></script>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="theme.css">
+	<link rel="stylesheet" type="text/css" href="./theme.css">
 </head>
 <body>
 	<h1>TO DO LIST Manager</h1>
 
-    <div id="to_do_list">
-    </div>
+	<div class="grid-wrapper">
+		<input type="text" id="text_of_new" placeholder="New task">
+		<input class="button button--green" type="submit" id="add_new" value="Add" />
+	</div>
 
-	<div>
-		<input type="text_of_new" id="text_of_new" placeholder="New task">
-		<input type="submit" id="add_new" value="Add new" />
+	<div id="to_do_list">
 	</div>
-	<div>
-		<input type="submit" id="uncheck_selected" value="Uncheck all" />
+
+
+	<div class="button-container">
+		<input class="button button--full button--green" type="submit" id="uncheck_selected" value="Uncheck all" />
 	</div>
-	<div>
-		<input type="submit" id="remove_selected" value="Delete selected" />
+	<div class="button-container">
+		<input class="button button--full button--red" type="submit" id="remove_selected" value="Delete selected" />
 	</div>
 
 

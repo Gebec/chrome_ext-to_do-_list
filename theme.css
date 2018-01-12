@@ -1,3 +1,55 @@
-body  {
-	width: 250px;
-}
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box; }
+
+body {
+  min-width: 250px; }
+
+h1 {
+  margin: 10px 5px; }
+
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  padding: 5px 5px; }
+
+#text_of_new {
+  border: none;
+  background-color: #ecf0f1;
+  padding: 2px 5px; }
+  #text_of_new:focus {
+    outline: none; }
+
+.button-container {
+  padding: 2px 5px; }
+
+.button {
+  border: none;
+  padding: 3px 5px; }
+  .button--full {
+    width: 100%;
+    border-radius: 3px; }
+  .button--green {
+    background-color: #27ae60; }
+  .button--blue {
+    background-color: #3498db; }
+  .button--red {
+    background-color: #e74c3c; }
+
+#to_do_list {
+  font-size: 12px; }
+  #to_do_list > input {
+    -webkit-appearance: none;
+    border: 1px solid black;
+    width: 10px;
+    height: 10px;
+    background: #fcfff4;
+    border-radius: 100%;
+    margin: 0px 5px; }
+    #to_do_list > input:focus {
+      outline: none; }
+    #to_do_list > input:checked {
+      background-color: #27ae60; }
+
+/*# sourceMappingURL=theme.css.map */

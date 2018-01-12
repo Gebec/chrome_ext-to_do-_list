@@ -61,11 +61,14 @@ let append_element = function(value, checked, id) {
 	new_input.setAttribute("id", id);
 	checked && new_input.setAttribute("checked", true);
 
-	let input_placeholder = document.createTextNode(value);
+	let input_label = document.createElement("label");
+	input_label.setAttribute("for", id);
+	input_label.innerHTML = value;
+
 	let new_line = document.createElement("br");
 
 	parent.appendChild(new_input);
-	parent.appendChild(input_placeholder);
+	parent.appendChild(input_label);
 	parent.appendChild(new_line);
 }
 
