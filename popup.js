@@ -2,11 +2,12 @@ window.onload = function() {
 	//document.cookie =  '[]; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	renderer();
 
-	document.getElementById('add_new').addEventListener("click", function(){
-		let text_box = document.getElementById("text_of_new");
-		text_box.value && add_new_input(text_box.value);
+	document.getElementById('text_of_new').addEventListener("keydown", function(){
+		(event.key === 'Enter') && new_input_submited();
+	});
 
-		text_box.value = '';
+	document.getElementById('add_new').addEventListener("click", function(){
+		new_input_submited();
 	});
 
 	document.getElementById('uncheck_selected').addEventListener("click", function(){
@@ -19,6 +20,13 @@ window.onload = function() {
 	});
 
 }
+
+let new_input_submited = function() {
+	let text_box = document.getElementById("text_of_new");
+	text_box.value && add_new_input(text_box.value);
+
+	text_box.value = '';
+};
 
 let add_new_input = function(value) {
 	let list = get_cookies();
@@ -53,7 +61,9 @@ let append_list = function(list) {
 }
 
 let append_element = function(value, checked, id) {
-	let parent = document.getElementById("to_do_list");
+	let list = document.getElementById("to_do_list");
+
+	let  parent_div = document.createElement("div");
 
 	let new_input = document.createElement("input");
 	new_input.setAttribute("type", "checkbox");
@@ -67,9 +77,11 @@ let append_element = function(value, checked, id) {
 
 	let new_line = document.createElement("br");
 
-	parent.appendChild(new_input);
-	parent.appendChild(input_label);
-	parent.appendChild(new_line);
+	parent_div.appendChild(new_input);
+	parent_div.appendChild(input_label);
+	parent_div.appendChild(new_line);
+
+	list.appendChild(parent_div);
 }
 
 let add_check_listener = function() {

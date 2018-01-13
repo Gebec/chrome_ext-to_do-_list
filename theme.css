@@ -1,55 +1,77 @@
+@charset "UTF-8";
 * {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box; }
 
 body {
-  min-width: 250px; }
+  min-width: 250px;
+  padding: 5px;
+  background-color: #FAFFFA; }
 
 h1 {
-  margin: 10px 5px; }
+  margin: 10px 5px;
+  text-align: center;
+  color: dimgrey; }
 
 .grid-wrapper {
   display: grid;
-  grid-template-columns: 80% 20%;
-  padding: 5px 5px; }
+  grid-template-columns: 10% 90%;
+  background-color: #E8E8F0; }
 
 #text_of_new {
   border: none;
-  background-color: #ecf0f1;
-  padding: 2px 5px; }
+  padding: 2px 5px;
+  background-color: inherit;
+  color: grey;
+  border-radius: 0px 3px 0px 3px; }
   #text_of_new:focus {
     outline: none; }
+  #text_of_new::placeholder {
+    color: Gainsboro; }
 
 .button-container {
   padding: 2px 5px; }
 
 .button {
   border: none;
-  padding: 3px 5px; }
+  padding: 3px 5px;
+  background-color: #E8E8F0;
+  outline: none; }
   .button--full {
     width: 100%;
-    border-radius: 3px; }
-  .button--green {
-    background-color: #27ae60; }
-  .button--blue {
-    background-color: #3498db; }
-  .button--red {
-    background-color: #e74c3c; }
+    border-radius: 3px;
+    border: 1px solid #A0A0A0; }
+  .button--submit {
+    background-color: inherit;
+    color: darkgrey; }
 
 #to_do_list {
-  font-size: 12px; }
-  #to_do_list > input {
-    -webkit-appearance: none;
-    border: 1px solid black;
-    width: 10px;
-    height: 10px;
-    background: #fcfff4;
-    border-radius: 100%;
-    margin: 0px 5px; }
-    #to_do_list > input:focus {
-      outline: none; }
-    #to_do_list > input:checked {
-      background-color: #27ae60; }
+  font-size: 12px;
+  margin: 10px 5px; }
+  #to_do_list > div {
+    display: flex;
+    align-items: center;
+    position: relative; }
+    #to_do_list > div > input[type="checkbox"] {
+      -webkit-appearance: none;
+      border: 1px solid #A0A0A0;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 100%;
+      margin: 0px 5px; }
+      #to_do_list > div > input[type="checkbox"]:focus {
+        outline: none; }
+      #to_do_list > div > input[type="checkbox"]::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 8px;
+        font-size: 9px;
+        font-weight: bold;
+        color: LimeGreen; }
+      #to_do_list > div > input[type="checkbox"]:checked::after {
+        content: '✔'; }
 
 /*# sourceMappingURL=theme.css.map */
