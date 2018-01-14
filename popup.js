@@ -45,6 +45,7 @@ renderer = () => {
 	append_list(get_cookies());
 
 	add_check_listener();
+	add_change_order_listener();
 };
 
 clear_list = () => {
@@ -75,11 +76,22 @@ append_element = (value, checked, id) => {
 	input_label.setAttribute("for", id);
 	input_label.innerHTML = value;
 
-	let new_line = document.createElement("br");
+	let change_up_button = document.createElement("button");
+	change_up_button.setAttribute("class", "button button-up");
+	change_up_button.innerHTML = "&#11205;";
+	change_up_button.setAttribute("data-row", id);
+	change_up_button.setAttribute("data-direction", 'up');
+
+	let change_down_button = document.createElement("button");
+	change_down_button.setAttribute("class", "button button-down");
+	change_down_button.innerHTML = "&#11206;";
+	change_down_button.setAttribute("data-row", id);
+	change_down_button.setAttribute("data-direction", 'down');
 
 	parent_div.appendChild(new_input);
 	parent_div.appendChild(input_label);
-	parent_div.appendChild(new_line);
+	parent_div.appendChild(change_up_button);
+	parent_div.appendChild(change_down_button);
 
 	list.appendChild(parent_div);
 }
@@ -99,6 +111,50 @@ change_check_state = (id, state) => {
 	list[id]['checked'] = state;
 
 	save_cookies(list);
+}
+
+add_change_order_listener = () => {
+	const change_order_button_list = document.querySelectorAll("button[data-row]");
+
+	for (let button of change_order_button_list) {
+		button.addEventListener('click', function() {
+			move_input(this.getAttribute('data-row'), this.getAttribute('data-direction'));
+		});
+	}
+}
+
+move_input = (row, direction) => {
+	let input_list = get_cookies();
+	direction === 'up' ? move_input_one_up(row) : move_input_one_down(row);
+}
+
+move_input_one_down = (row) => {
+	let input_list = get_cookies();
+	
+	// For some reason [row + 1] throws an error. So I have to do row++ and use [row - 1]
+	row++;
+	if (input_list[row]) {
+		let temp = input_list[row];
+		input_list[row] = input_list[row - 1];
+		input_list[row - 1] = temp;
+
+		save_cookies(input_list);
+		renderer();
+	}
+}
+
+move_input_one_up = (row) => {
+	let input_list = get_cookies();
+
+	if (input_list[row-1]) {
+		let temp = input_list[row];
+		input_list[row] = input_list[row - 1];
+		input_list[row - 1] = temp;
+
+
+		save_cookies(input_list);
+		renderer();
+	}
 }
 
 get_cookies = () => {
