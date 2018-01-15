@@ -1,6 +1,6 @@
 window.onload = () => {
 	//document.cookie =  '[]; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-	renderer();
+	renderer(get_cookies());
 
 	document.getElementById('text_of_new').addEventListener("keydown", () => {
 		(event.key === 'Enter') && new_input_submited();
@@ -8,6 +8,18 @@ window.onload = () => {
 
 	document.getElementById('add_new').addEventListener("click", () => {
 		new_input_submited();
+	});
+
+	document.getElementById('show_finished').addEventListener("click", () => {
+		show_finished(get_cookies());
+	});
+
+	document.getElementById('show_unfinished').addEventListener("click", () => {
+		show_unfinished(get_cookies());
+	});
+
+	document.getElementById('show_all').addEventListener("click", () => {
+		renderer(get_cookies());
 	});
 
 	document.getElementById('uncheck_selected').addEventListener("click", () => {
@@ -39,10 +51,10 @@ add_new_input = value => {
 	);
 }
 
-renderer = () => {
+renderer = (list) => {
 	clear_list();
 
-	append_list(get_cookies());
+	append_list(list);
 
 	add_check_listener();
 	add_change_order_listener();
@@ -130,7 +142,7 @@ move_input = (row, direction) => {
 
 move_input_one_down = (row) => {
 	let input_list = get_cookies();
-	
+
 	// For some reason [row + 1] throws an error. So I have to do row++ and use [row - 1]
 	row++;
 	if (input_list[row]) {
@@ -139,7 +151,7 @@ move_input_one_down = (row) => {
 		input_list[row - 1] = temp;
 
 		save_cookies(input_list);
-		renderer();
+		renderer(get_cookies());
 	}
 }
 
@@ -153,7 +165,7 @@ move_input_one_up = (row) => {
 
 
 		save_cookies(input_list);
-		renderer();
+		renderer(get_cookies());
 	}
 }
 
@@ -177,18 +189,16 @@ save_cookies = (list, new_input) => {
 	new_input && list.push(new_input);
 
 	document.cookie = format_cookies(list);
-	renderer();
+	renderer(get_cookies());
 }
 
 format_cookies = (list, new_input) => {
-	const formated_list = [];
-
-	for (let input in list) {
-		formated_list.push({
-			"name": list[input].name,
-			"checked": list[input].checked
-		});
-	};
+	const formated_list = list.map(input => {
+		return {
+			"name": input.name,
+			"checked": input.checked
+		}
+	})
 
 	new_input && formated_list.push(new_input);
 
@@ -208,4 +218,24 @@ remove_selected = list => {
 	};
 
 	save_cookies(new_list);
+}
+
+show_finished = () => {
+	const list = get_cookies();
+
+	const finished_list = list.filter(input => {
+		return input.checked;
+	});
+
+	renderer(finished_list);
+}
+
+show_unfinished = () => {
+	const list = get_cookies();
+
+	const unfinished_list = list.filter(input => {
+		return !input.checked;
+	});
+
+	renderer(unfinished_list);
 }
