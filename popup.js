@@ -6,6 +6,11 @@ window.onload = () => {
 		(event.key === 'Enter') && new_input_submited();
 	});
 
+	document.getElementById('text_of_new').addEventListener("keyup", () => {
+		let input = document.getElementById('text_of_new');
+		input.value = input.value.replace(/;*=*/g,"");
+	});
+
 	document.getElementById('add_new').addEventListener("click", () => {
 		new_input_submited();
 	});
@@ -192,15 +197,13 @@ save_cookies = (list, new_input) => {
 	renderer(get_cookies());
 }
 
-format_cookies = (list, new_input) => {
+format_cookies = (list) => {
 	const formated_list = list.map(input => {
 		return {
 			"name": input.name,
 			"checked": input.checked
 		}
-	})
-
-	new_input && formated_list.push(new_input);
+	});
 
 	return JSON.stringify(formated_list);
 };
