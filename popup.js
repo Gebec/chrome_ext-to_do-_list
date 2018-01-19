@@ -82,6 +82,7 @@ append_element = (value, checked, id) => {
 	let list = document.getElementById("to_do_list");
 
 	let  parent_div = document.createElement("div");
+	parent_div.setAttribute("class", "input-container");
 
 	let new_input = document.createElement("input");
 	new_input.setAttribute("type", "checkbox");
@@ -94,16 +95,17 @@ append_element = (value, checked, id) => {
 	input_label.innerHTML = value;
 
 	let change_up_button = document.createElement("button");
-	change_up_button.setAttribute("class", "button button-up");
+	change_up_button.setAttribute("class", "button button__arrow");
 	change_up_button.innerHTML = "&#11205;";
 	change_up_button.setAttribute("data-row", id);
 	change_up_button.setAttribute("data-direction", 'up');
 
 	let change_down_button = document.createElement("button");
-	change_down_button.setAttribute("class", "button button-down");
+	change_down_button.setAttribute("class", "button button__arrow button__arrow--left");
 	change_down_button.innerHTML = "&#11206;";
 	change_down_button.setAttribute("data-row", id);
 	change_down_button.setAttribute("data-direction", 'down');
+
 
 	parent_div.appendChild(new_input);
 	parent_div.appendChild(input_label);
